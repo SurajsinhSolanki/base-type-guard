@@ -1,0 +1,25 @@
+{
+  "name": "base-type-guard",
+  "version": "1.0.0",
+  "description": "Lightweight type guard utilities written in TypeScript",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.js",
+    "require": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["type", "guard", "typescript", "utility"],
+  "author": "Surajsinh",
+  "license": "MIT",
+  "devDependencies": {
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
+  }
+}
