@@ -87,7 +87,7 @@ export function isArray<T = unknown>(value: unknown): value is T[] {
  * Checks if a value is a non-empty array
  */
 export function isNonEmptyArray<T = unknown>(
-  value: unknown
+  value: unknown,
 ): value is [T, ...T[]] {
   return Array.isArray(value) && value.length > 0;
 }
@@ -96,22 +96,14 @@ export function isNonEmptyArray<T = unknown>(
  * Checks if a value is a plain object (not null, not array, not Date, etc.)
  */
 export function isObject(value: unknown): value is Record<string, unknown> {
-  return (
-    value !== null &&
-    typeof value === "object" &&
-    !Array.isArray(value) &&
-    !(value instanceof Date) &&
-    !(value instanceof RegExp) &&
-    !(value instanceof Map) &&
-    !(value instanceof Set)
-  );
+  return Object.prototype.toString.call(value) === "[object Object]";
 }
 
 /**
  * Checks if a value is a plain object with at least one property
  */
 export function isNonEmptyObject(
-  value: unknown
+  value: unknown,
 ): value is Record<string, unknown> {
   return isObject(value) && Object.keys(value).length > 0;
 }
@@ -134,7 +126,7 @@ export function isRegExp(value: unknown): value is RegExp {
  * Checks if a value is a Map
  */
 export function isMap<K = unknown, V = unknown>(
-  value: unknown
+  value: unknown,
 ): value is Map<K, V> {
   return value instanceof Map;
 }
@@ -282,7 +274,7 @@ export function isUuid(value: unknown): value is string {
  * Checks if a value is a primitive type
  */
 export function isPrimitive(
-  value: unknown
+  value: unknown,
 ): value is string | number | boolean | null | undefined | symbol | bigint {
   const type = typeof value;
   return (
@@ -331,7 +323,7 @@ export function getType(value: unknown): string {
 export function assertType<T>(
   value: unknown,
   predicate: (val: unknown) => val is T,
-  message?: string
+  message?: string,
 ): asserts value is T {
   if (!predicate(value)) {
     throw new TypeError(message || `Type assertion failed for value: ${value}`);
@@ -345,7 +337,7 @@ export function assertType<T>(
  */
 export function isArrayOf<T>(
   value: unknown,
-  predicate: (item: unknown) => item is T
+  predicate: (item: unknown) => item is T,
 ): value is T[] {
   return Array.isArray(value) && value.every(predicate);
 }
